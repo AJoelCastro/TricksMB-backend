@@ -28,4 +28,4 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: arturocastro/tricksmb-backend/TricksMB:v1.0.0
+          tags: arturocastro/tricksmb-backend/tricksmb:v1.0.0
