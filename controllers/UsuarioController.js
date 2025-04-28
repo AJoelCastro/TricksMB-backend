@@ -4,10 +4,10 @@ const jwt = require('jsonwebtoken');
 
 const UsuarioController = {
     async register(req, res, next) {
-        const { idEmpleado, correo, contrasenia } = req.body;
+        const { idEmpleado, idRol, correo, contrasenia } = req.body;
 
         try {
-            const result = await UsuarioService.createUser(idEmpleado, correo, contrasenia);
+            const result = await UsuarioService.createUser(idEmpleado, idRol, correo, contrasenia);
             res.json({result, status: 201});
         } catch (error) {
             next(error);
@@ -42,7 +42,17 @@ const UsuarioController = {
         } catch (error) {
             next(error);
         }
-    }
+    },
+
+    async getByIdRol(req, res, next) {
+        const { idRol } = req.params;
+        try {
+            const user = await UsuarioService.getUserByIdRol(idRol);
+            res.json({user, status: 200});
+        } catch (error) {
+            next(error);
+        }
+    },
 };
 
 module.exports = UsuarioController;

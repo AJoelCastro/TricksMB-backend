@@ -10,11 +10,11 @@ const UsuarioService = {
         return user;
     },
 
-    async createUser(idEmpleado, correo, contrasenia) {
+    async createUser(idEmpleado, idRol, correo, contrasenia) {
         if (!correo || !contrasenia || !idEmpleado) throw new Error('Nombre de usuario y contraseña son requeridos');
 
         const hashedContrasenia = await bcrypt.hash(contrasenia, 10);
-        return await UsuarioDAO.createUser(idEmpleado, correo, hashedContrasenia);
+        return await UsuarioDAO.createUser(idEmpleado, idRol, correo, hashedContrasenia);
     },
 
     async findUser(correo, contrasenia) {
@@ -22,7 +22,13 @@ const UsuarioService = {
         if (!user) return null;
 
         const isPasswordValid = await bcrypt.compare(contrasenia, user.Contrasenia);
-        if (!isPasswordValid) return null;
+        if (!isPasswordValid) return null; 
+        return user;
+    },
+
+    async getUserByIdRol(idRol) {
+        const user = await UsuarioDAO.getByIdRol(idRol);
+        if (!user) throw new Error('Usuario no encontrado');
         return user;
     },
 };
