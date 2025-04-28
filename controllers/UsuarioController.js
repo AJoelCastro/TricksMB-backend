@@ -4,9 +4,13 @@ const jwt = require('jsonwebtoken');
 
 const UsuarioController = {
     async register(req, res, next) {
-        const { idEmpleado, idRol, correo, contrasenia } = req.body;
-
         try {
+            const { idEmpleado, idRol, correo, contrasenia } = req.body;
+            if (!idEmpleado || !idRol || !correo || !contrasenia) {
+                const errorData = new Error("Faltan datos para registrar un usuario");
+                errorData.status = 400;
+                throw errorData;
+            }
             const result = await UsuarioService.createUser(idEmpleado, idRol, correo, contrasenia);
             res.json({result, status: 201});
         } catch (error) {
