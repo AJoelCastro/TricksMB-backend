@@ -25,6 +25,12 @@ const UsuarioService = {
         if (!isPasswordValid) return null; 
         return user;
     },
+
+    async getUserByIdRol(idRol) {
+        const user = await UsuarioDAO.getByIdRol(idRol);
+        if (!user) throw new Error('Usuario no encontrado');
+        return user;
+    },
 };
 
 module.exports = UsuarioService;

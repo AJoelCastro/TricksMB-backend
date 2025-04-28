@@ -12,4 +12,6 @@ router.get('/perfil', authMiddleware, (req, res) => {
     res.json({ success: true, message: "Ruta protegida", user: req.user });
 });
 
+router.get('/idRol/:idRol', authMiddleware, UsuarioController.getByIdRol);
+
 module.exports = router;

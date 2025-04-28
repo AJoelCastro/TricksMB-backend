@@ -42,7 +42,17 @@ const UsuarioController = {
         } catch (error) {
             next(error);
         }
-    }
+    },
+
+    async getByIdRol(req, res, next) {
+        const { idRol } = req.params;
+        try {
+            const user = await UsuarioService.getUserByIdRol(idRol);
+            res.json({user, status: 200});
+        } catch (error) {
+            next(error);
+        }
+    },
 };
 
 module.exports = UsuarioController;

@@ -41,6 +41,19 @@ class UsuarioDAO {
             throw error;
         }
     }
+
+    static async getByIdRol(idRol) {
+        try {
+            const query = 'SELECT * FROM usuario WHERE Rol_idRol = ?';
+            const [rows] = await db.execute(query, [idRol]);
+
+            return rows[0];
+        } catch (error) {
+            console.error("Error al buscar usuario por idRol:", error);
+            throw error;
+        }
+    }
 }
+
 
 module.exports = UsuarioDAO;
