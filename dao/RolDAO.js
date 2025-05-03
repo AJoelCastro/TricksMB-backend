@@ -13,10 +13,12 @@ class RolDAO {
 
     static async getRolById(idRol) {
         try {
-            console.log(idRol);
-            const query = 'SELECT * FROM rol WHERE idRol = ?';
-            const [rows] = await db.execute(query, [idRol]);
-            console.log(rows);
+            const [rows] = await db.execute(`SELECT * FROM rol WHERE idRol = ?`, [idRol]);
+            if (rows.length === 0) {
+                const errorData = new Error("Rol no encontrado");
+                errorData.status = 404;
+                throw errorData; // Lanza la excepció
+            }
             return rows;
         } catch (error) {
             throw error.status ? error : new Error('Error al obtener el rol');

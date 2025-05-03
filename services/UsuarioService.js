@@ -32,11 +32,17 @@ const UsuarioService = {
     },
 
     async getUserById(idUsuario) {
-        const user = await UsuarioDAO.getById(idUsuario);
-        if (!user) throw new Error('Usuario no encontrado');
-        const rol = await RolDAO.getRolById(user.Rol_idRol);
-        if (!rol) throw new Error('Rol no encontrado');
-        return {user,rol};
+        try {
+            const user = await UsuarioDAO.getById(idUsuario);
+            console.log("User",user);
+            if (!user) throw new Error('Usuario no encontrado');
+            const rol = await RolDAO.getRolById(user.Rol_idRol);
+            console.log("Rol",rol);
+            if (!rol) throw new Error('Rol no encontrado');
+            return user;
+        } catch (error) {
+            throw error.status ? error : { status: 500, message: 'Error en el servicio al obtener usuario' };
+        }
     },
 };
 
