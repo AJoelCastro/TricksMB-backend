@@ -7,44 +7,79 @@ const EmpleadoDAO = require('../dao/EmpleadoDAO');
 const UsuarioService = {
 
     async getUserByCorreo(correo) {
-        const user = await UsuarioDAO.getByCorreo(correo);
-        if (!user) throw new Error('Usuario no encontrado');
-        return user;
+        try {
+            const user = await UsuarioDAO.getByCorreo(correo);
+            if (!user){
+                const errorData = new Error("Usuario no encontrado");
+                errorData.status = 404;
+                throw errorData;
+            }
+            return user;
+        } catch (error) {
+            throw error.status? error : { status: 500, message: 'Error en el servicio al buscar usuario' };
+        }
     },
 
     async createUser(idEmpleado, idRol, correo, contrasenia) {
-        const hashedContrasenia = await bcrypt.hash(contrasenia, 10);
-        return await UsuarioDAO.createUser(idEmpleado, idRol, correo, hashedContrasenia);
+        try {
+            const hashedContrasenia = await bcrypt.hash(contrasenia, 10);
+            return await UsuarioDAO.createUser(idEmpleado, idRol, correo, hashedContrasenia);
+        } catch (error) {
+            throw error.status? error : { status: 500, message: 'Error en el servicio al crear usuario' };
+        }
     },
 
     async findUser(correo, contrasenia) {
-        const user = await UsuarioDAO.encUser(correo);
-        if (!user) return null;
-
-        const isPasswordValid = await bcrypt.compare(contrasenia, user.Contrasenia);
-        if (!isPasswordValid) return null; 
-        return user;
+        try {
+            const user = await UsuarioDAO.encUser(correo);
+            if (!user){
+                const errorData1 = new Error("Usuario no encontrado");
+                errorData1.status = 404;
+                throw errorData1;
+            }
+            const isPasswordValid = await bcrypt.compare(contrasenia, user.Contrasenia);
+            if (!isPasswordValid){
+                const errorData2 = new Error("Contraseña incorrecta");
+                errorData2.status = 401;
+                throw errorData2;
+            }
+            return user;   
+        } catch (error) {
+            throw error.status? error : { status: 500, message: 'Error en el servicio al buscar usuario' };
+        }
     },
 
     async getUserByIdRol(idRol) {
-        const user = await UsuarioDAO.getByIdRol(idRol);
-        if (!user) throw new Error('Usuario no encontrado');
-        return user;
+        try {
+
+            const users = await UsuarioDAO.getByIdRol(idRol);
+            if (!users || users.length === 0){
+                const errorData = new Error("Usuario no encontrado");
+                errorData.status = 404;
+                throw errorData;
+            }
+            return users;
+        }catch (error) {
+            throw error.status? error : { status: 500, message: 'Error en el servicio al obtener usuario' };
+        }
     },
 
     async getUserById(idUsuario) {
         try {
             const user = await UsuarioDAO.getById(idUsuario);
-            console.log(user.Correo);
             if (!user) throw new Error('Usuario no encontrado');
-            let idEmpleado = user.Empleado_idEmpleado;
-            const empleado = await EmpleadoDAO.getEmpleadoPorId(idEmpleado);
-            console.log(empleado.Nombres);
-            let idRol = user.Rol_idRol;
-            const rol = await RolDAO.getRolById(idRol);
-            console.log(rol[0].Nombre);
-            if (!rol) throw new Error('Rol no encontrado');
-            return user;
+
+            const empleado = await EmpleadoDAO.getEmpleadoPorId(user.Empleado_idEmpleado);
+            if (!empleado) throw new Error('Empleado no encontrado');
+
+            const rol = await RolDAO.getRolById(user.Rol_idRol);
+            if (!rol || rol.length === 0) throw new Error('Rol no encontrado');
+
+            return {
+                correo: user.Correo,
+                nombres: empleado.Nombres,
+                rol: rol[0].Nombre,
+            };
         } catch (error) {
             throw error.status ? error : { status: 500, message: 'Error en el servicio al obtener usuario' };
         }

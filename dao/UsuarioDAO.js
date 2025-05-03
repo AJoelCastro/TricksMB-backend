@@ -57,11 +57,14 @@ class UsuarioDAO {
         try {
             const query = 'SELECT * FROM usuario WHERE idUsuario = ?';
             const [rows] = await db.execute(query, [idUsuario]);
-
+            if (rows.length === 0) {
+                const errorData = new Error("Usuario no encontrado");
+                errorData.status = 404;
+                throw errorData;
+            }
             return rows[0];
         } catch (error) {
-            console.error("Error al buscar usuario por idUsuario:", error);
-            throw error;
+            throw error.status? error : new Error('Error al obtener el usuario');
         }
     }
 }

@@ -63,6 +63,7 @@ const UsuarioController = {
     try {
         const idUsuario = req.user.userId;
         const user = await UsuarioService.getUserById(idUsuario);
+        console.log(user);
         res.json(user);
     } catch (error) {
         next(error);
