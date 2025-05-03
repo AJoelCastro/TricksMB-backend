@@ -34,9 +34,9 @@ const UsuarioService = {
     async getUserById(idUsuario) {
         try {
             const user = await UsuarioDAO.getById(idUsuario);
-            console.log("User",user);
             if (!user) throw new Error('Usuario no encontrado');
-            const rol = await RolDAO.getRolById(user.Rol_idRol);
+            let idRol = user.Rol_idRol;
+            const rol = await RolDAO.getRolById(idRol);
             console.log("Rol",rol);
             if (!rol) throw new Error('Rol no encontrado');
             return user;

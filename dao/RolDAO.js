@@ -1,4 +1,4 @@
-const db='../config/db.js';
+const db = require('../config/db');
 
 class RolDAO {
     static async createRol(nombreRol) {
@@ -13,12 +13,13 @@ class RolDAO {
 
     static async getRolById(idRol) {
         try {
-            const [rows] = await db.execute(`SELECT * FROM rol WHERE idRol = ?`, [idRol]);
+            const rows = await db.execute(`SELECT * FROM Rol WHERE idRol = ?`, [idRol]);
             if (rows.length === 0) {
                 const errorData = new Error("Rol no encontrado");
                 errorData.status = 404;
                 throw errorData; // Lanza la excepció
             }
+            console.log("Rol rows",rows);
             return rows;
         } catch (error) {
             throw error.status ? error : new Error('Error al obtener el rol');
