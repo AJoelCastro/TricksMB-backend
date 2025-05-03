@@ -8,9 +8,8 @@ router.post('/register', UsuarioController.register);
 router.post('/login',UsuarioController.login);
 
 // Rutas protegidas (solo accesibles con token)
-router.get('/perfil', authMiddleware, (req, res) => {
-    res.json({ success: true, message: "Ruta protegida", user: req.user });
-});
+router.get("/perfil", authMiddleware, UsuarioController.perfil);
+
 
 router.get('/idRol/:idRol', authMiddleware, UsuarioController.getByIdRol);
 

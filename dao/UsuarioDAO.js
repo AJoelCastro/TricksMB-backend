@@ -52,6 +52,18 @@ class UsuarioDAO {
             throw error;
         }
     }
+
+    static async getById(idUsuario) {
+        try {
+            const query = 'SELECT * FROM usuario WHERE idUsuario = ?';
+            const [rows] = await db.execute(query, [idUsuario]);
+
+            return rows[0];
+        } catch (error) {
+            console.error("Error al buscar usuario por idUsuario:", error);
+            throw error;
+        }
+    }
 }
 
 

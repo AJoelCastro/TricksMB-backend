@@ -58,6 +58,17 @@ const UsuarioController = {
             next(error);
         }
     },
+
+    async perfil(req, res, next) {
+    try {
+        const idUsuario = req.user.userId;
+        const user = await UsuarioService.getUserById(idUsuario);
+        res.json(user);
+    } catch (error) {
+        next(error);
+    }
+}
+
 };
 
 module.exports = UsuarioController;
