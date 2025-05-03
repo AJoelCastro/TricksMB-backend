@@ -19,8 +19,7 @@ class RolDAO {
                 errorData.status = 404;
                 throw errorData; // Lanza la excepció
             }
-            console.log("Rol rows",rows);
-            return rows;
+            return rows[0];
         } catch (error) {
             throw error.status ? error : new Error('Error al obtener el rol');
         }

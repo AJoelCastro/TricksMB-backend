@@ -37,6 +37,17 @@ class EmpleadoDAO {
       throw { status: 500, message: "Error interno en el DAO." };
     }
   }
+
+  static async getEmpleadoPorId(idEmpleado) {
+    try {
+      const query = `SELECT * FROM Empleado WHERE idEmpleado = ?`;
+      const [rows] = await db.execute(query, [idEmpleado]);
+      return rows[0];
+    }
+    catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = EmpleadoDAO;

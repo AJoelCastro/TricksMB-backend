@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 
 const UsuarioDAO = require('../dao/UsuarioDAO');
 const RolDAO = require('../dao/RolDAO');
+const EmpleadoDAO = require('../dao/EmpleadoDAO');
 
 const UsuarioService = {
 
@@ -34,10 +35,14 @@ const UsuarioService = {
     async getUserById(idUsuario) {
         try {
             const user = await UsuarioDAO.getById(idUsuario);
+            console.log(user.Correo);
             if (!user) throw new Error('Usuario no encontrado');
+            let idEmpleado = user.Empleado_idEmpleado;
+            const empleado = await EmpleadoDAO.getEmpleadoPorId(idEmpleado);
+            console.log(empleado.Nombres);
             let idRol = user.Rol_idRol;
             const rol = await RolDAO.getRolById(idRol);
-            console.log("Rol",rol);
+            console.log(rol[0].Nombre);
             if (!rol) throw new Error('Rol no encontrado');
             return user;
         } catch (error) {
