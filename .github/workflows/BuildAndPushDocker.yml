@@ -1,8 +1,7 @@
-name: ci
+name: Continue Integration to Docker
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   docker:
