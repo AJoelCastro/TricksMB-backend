@@ -11,8 +11,6 @@ const UsuarioService = {
     },
 
     async createUser(idEmpleado, idRol, correo, contrasenia) {
-        if (!correo || !contrasenia || !idEmpleado) throw new Error('Nombre de usuario y contraseña son requeridos');
-
         const hashedContrasenia = await bcrypt.hash(contrasenia, 10);
         return await UsuarioDAO.createUser(idEmpleado, idRol, correo, hashedContrasenia);
     },

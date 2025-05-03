@@ -3,12 +3,11 @@ const db = require('../config/db'); // Asegúrate de tener tu conexión a la bas
 class UsuarioDAO {
     static async createUser(idEmpleado, idRol, correo, contrasenia) {
         try {
-            const query = 'INSERT INTO usuario (Empleado_idEmpleado, Rol_idRol, Correo, Contrasenia) VALUES (?, ?, ?)';
+            const query = 'INSERT INTO usuario (Empleado_idEmpleado, Rol_idRol, Correo, Contrasenia) VALUES (?, ?, ?, ?)';
             const [result] = await db.execute(query, [idEmpleado, idRol, correo, contrasenia]);
             return { id: result.insertId, correo };
         } catch (error) {
-            console.error("Error al crear usuario:", error);
-            throw error;
+            throw error.status? error : new Error('Error al crear el usuario');
         }
     }
 
