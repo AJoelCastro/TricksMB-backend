@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 
 const UsuarioDAO = require('../dao/UsuarioDAO');
+const RolDAO = require('../dao/RolDAO');
 
 const UsuarioService = {
 
@@ -33,7 +34,9 @@ const UsuarioService = {
     async getUserById(idUsuario) {
         const user = await UsuarioDAO.getById(idUsuario);
         if (!user) throw new Error('Usuario no encontrado');
-        return user;
+        const rol = await RolDAO.getRolById(user.Rol_idRol);
+        if (!rol) throw new Error('Rol no encontrado');
+        return {user,rol};
     },
 };
 
