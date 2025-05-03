@@ -31,6 +31,12 @@ const UsuarioService = {
         if (!user) throw new Error('Usuario no encontrado');
         return user;
     },
+
+    async getUserById(idUsuario) {
+        const user = await UsuarioDAO.getById(idUsuario);
+        if (!user) throw new Error('Usuario no encontrado');
+        return user;
+    },
 };
 
 module.exports = UsuarioService;
