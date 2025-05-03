@@ -42,10 +42,15 @@ class EmpleadoDAO {
     try {
       const query = `SELECT * FROM Empleado WHERE idEmpleado = ?`;
       const [rows] = await db.execute(query, [idEmpleado]);
+      if (rows.length === 0) {
+        const error = new Error("Empleado no encontrado");
+        error.status = 404;
+        throw error;
+      }
       return rows[0];
     }
     catch (error) {
-      throw error;
+      throw error.status?error:{status:500,message:"Error interno en el DAO al buscar empleado por id"};
     }
   }
 }

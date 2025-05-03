@@ -67,13 +67,10 @@ const UsuarioService = {
     async getUserById(idUsuario) {
         try {
             const user = await UsuarioDAO.getById(idUsuario);
-            if (!user) throw new Error('Usuario no encontrado');
 
             const empleado = await EmpleadoDAO.getEmpleadoPorId(user.Empleado_idEmpleado);
-            if (!empleado) throw new Error('Empleado no encontrado');
 
             const rol = await RolDAO.getRolById(user.Rol_idRol);
-            if (!rol || rol.length === 0) throw new Error('Rol no encontrado');
 
             return {
                 correo: user.Correo,
