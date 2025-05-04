@@ -25,7 +25,6 @@ const DetallePedidoController = {
             const { idCliente } = await ClienteService.getCliente(clienteTipo);
             const { idModelo } = await ModeloService.getModeloByNombre(nomModelo);
             const { idPedido } = await PedidoService.createPedido(idCliente, fechaEntrega, serieInicio, serieFinal);
-
             const fecha = new Date();
             const fechaStr = fecha.toISOString().split("T")[0];
             const codigoPedido = `COD${fechaStr}${idPedido}`;
@@ -34,7 +33,7 @@ const DetallePedidoController = {
                 idPedido, idModelo, codigoPedido, nombreTaco, alturaTaco, material, 
                 tipoMaterial, suela, accesorios, forro
             );
-
+            console.log("detalle back",detallePedido);
             res.json({ detallePedido, status: 201 });
         } catch (error) {
             next(error);

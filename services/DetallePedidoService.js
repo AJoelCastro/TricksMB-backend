@@ -33,7 +33,7 @@ const DetallePedidoService = {
 
             return detallePedido;
         } catch (error) {
-            throw error.status? error: { status: 500, message: "Error en DetallePedido Service" };
+            throw error.status? error: { status: 500, message: "Error en Detalle Pedido Service" };
         }
     },
 

@@ -4,7 +4,7 @@ const CaracteristicasController = {
     async createCaracteristica(req, res, next) {
         try {
             let { idDetallePedido, talla, cantidad, color } = req.body;
-
+            console.log("body back",req.body);
             const convertirNumero = (valor, nombreCampo) => {
                 const numero = Number(valor);
                 if (isNaN(numero)) {
