@@ -3,7 +3,7 @@ const ImagenService = require('../services/ImagenService');
 const ImagenController = {
     async createImagen(req, res, next) {
         try {
-            const { idModelo, url } = req.params;
+            const { idModelo, url } = req.body;
             const imagen = await ImagenService.createImagen(idModelo, url);
             res.json({ imagen, status: 201 });
         } catch (error) {
