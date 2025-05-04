@@ -4,7 +4,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const ModeloController = require('../controllers/ModeloController');
 const ImagenController = require('../controllers/ImagenController');
 
-router.post('/crear', ModeloController.createModelo);
+router.post('/crear', authMiddleware, ModeloController.createModelo);
 router.get('/todos', authMiddleware, ModeloController.getAllModelo);
 router.get('/id', authMiddleware,  ModeloController.getAllModeloById);
 router.get('/obtener/:codigoPedido', authMiddleware, ModeloController.getModeloByCodigoPedido);

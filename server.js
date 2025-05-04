@@ -58,6 +58,7 @@ app.use('/almacen', AlmacenRoutes);
 app.use('/detalleAlmacen', DetalleAlmacenRoutes);
 app.use('/ingreso', IngresoRoutes);
 app.use('/salida', SalidaRoutes);
+app.use('/imagen', ImagenController);
 
 // Manejo de rutas no encontradas
 app.use((req, res, next) => {
@@ -77,6 +78,7 @@ app.listen(PORT, HOST, () => {
 });
 
 const os = require("os");
+const ImagenController = require('./controllers/ImagenController');
 
 const getLocalIP = () => {
     const interfaces = os.networkInterfaces();
