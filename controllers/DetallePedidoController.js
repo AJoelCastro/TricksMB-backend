@@ -33,6 +33,7 @@ const DetallePedidoController = {
                 idPedido, idModelo, codigoPedido, nombreTaco, alturaTaco, material, 
                 tipoMaterial, suela, accesorios, forro
             );
+            
             console.log("detalle back",detallePedido);
             res.json({ detallePedido, status: 201 });
         } catch (error) {

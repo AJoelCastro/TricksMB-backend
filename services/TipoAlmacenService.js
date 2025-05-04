@@ -12,6 +12,13 @@ const TipoAlmacenService = {
         }catch(error){
             throw error.status? error : {status: 500, message: "Error en Tipo Almacen Service"};
         }
+    },
+    getTiposAlmacen: async () => {
+        try{
+            return await TipoAlmacenDAO.getTiposAlmacen();
+        }catch(error){
+            throw error.status? error : {status: 500, message: "Error en Tipo Almacen Service"};
+        }
     }
 }
 
