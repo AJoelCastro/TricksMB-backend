@@ -22,7 +22,7 @@ const DetalleAlmacenService = {
             const result = await DetalleAlmacenDAO.createDetalleAlmacen(idAlmacen, detallePedido.idDetalle_pedido);
             return result;
         } catch (error) {
-            throw error.status ? error : {status: 500, message: "Error en Detalle Almacen Service"};
+            throw error.status ? error : {status: 500, message: "Error en Detalle Almacen Service al crear detalle almacen"};
         }
     },
 
@@ -37,7 +37,7 @@ const DetalleAlmacenService = {
             const data = await DetallePedidoService.getDetallePedidoByCodigoPedido(codigoPedido);
             return await DetalleAlmacenDAO.getDetalleAlmacen(data.idDetalle_pedido);
         }catch(error){
-            throw error.status? error: {status: 500, message: "Error en DetalleAlmacenService"};
+            throw error.status? error: {status: 500, message: "Error en Detalle Almacen Service al obtener detalle almacen"};
         }
     },
 
@@ -45,7 +45,7 @@ const DetalleAlmacenService = {
         try{
             return await DetalleAlmacenDAO.getAllDetalleAlmacen();
         }catch(error){
-            throw error.status? error: {status: 500, message: "Error en DetalleAlmacenService"};
+            throw error.status? error: {status: 500, message: "Error en Detalle Almacen Service al obtener todos los detalle almacen"};
         }
     },
 
@@ -59,7 +59,7 @@ const DetalleAlmacenService = {
             const {idAlmacen} = await AlmacenService.getAlmacen(nombreAlmacen);
             return await DetalleAlmacenDAO.updateIdAlmacen(idAlmacen, idDetalle_pedido);
         } catch(error){
-            throw error.status? error : {status: 500, message: "Error en Detalle Almacen Service"};
+            throw error.status? error : {status: 500, message: "Error en Detalle Almacen Service al actualizar id almacen"};
         }
     }, 
 
@@ -96,7 +96,7 @@ const DetalleAlmacenService = {
 
             return await DetalleAlmacenDAO.updateCantidadIngreso(detalleAlmacen[0].Detalle_pedido_idDetalle_pedido, cantidadIngreso);
         } catch(error){
-            throw error.status ? error : {status: 500, message: "Error en Detalle Almacen Service"};
+            throw error.status ? error : {status: 500, message: "Error en Detalle Almacen Service al actualizar cantidad ingreso"};
         }
     },
 
@@ -129,7 +129,7 @@ const DetalleAlmacenService = {
             
             return await DetalleAlmacenDAO.updateCantidadSalida(detalleAlmacen[0].Detalle_pedido_idDetalle_pedido, cantidadSalidaAlmacen);
         }catch(error){
-            throw error.status ? error : {status: 500, message: "Error en Detalle Almacen Service"};
+            throw error.status ? error : {status: 500, message: "Error en Detalle Almacen Service al actualizar cantidad salida"};
         }
 
     },
@@ -140,7 +140,7 @@ const DetalleAlmacenService = {
             if (!idModelo) throw { status: 400, message: "idModelo requerido" };
             return await DetalleAlmacenDAO.getDetallesAlmacenByModelo(idModelo);
         } catch (error) {
-            throw error;
+            throw error.status ? error : {status: 500, message: "Error en Detalle Almacen Service al obtener detalles almacen por modelo"};
         }
     }
     
