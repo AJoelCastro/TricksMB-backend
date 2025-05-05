@@ -15,10 +15,8 @@ const DetalleAlmacenService = {
                 errorCodigoPedido.status = 400;
                 throw errorCodigoPedido;
             };
-
             const {idAlmacen} = await AlmacenService.getAlmacen(nombreAlmacen);
             const detallePedido = await DetallePedidoService.getDetallePedidoByCodigoPedido(codigoPedido);
-
             const result = await DetalleAlmacenDAO.createDetalleAlmacen(idAlmacen, detallePedido.idDetalle_pedido);
             return result;
         } catch (error) {
