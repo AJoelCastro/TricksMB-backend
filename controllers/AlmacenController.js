@@ -6,7 +6,7 @@ const AlmacenController = {
         try {
             const { nombre, imagen, direccion } = req.body;
             const almacen = await AlmacenService.createAlmacen(nombre, imagen, direccion);
-            res.json({ almacen, status: 200 });
+            res.json({ almacen, status: 201 });
         } catch (error) {
             next(error);
         }

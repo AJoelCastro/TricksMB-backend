@@ -34,7 +34,6 @@ const DetallePedidoController = {
                 tipoMaterial, suela, accesorios, forro
             );
             
-            console.log("detalle back",detallePedido);
             res.json({ detallePedido, status: 201 });
         } catch (error) {
             next(error);

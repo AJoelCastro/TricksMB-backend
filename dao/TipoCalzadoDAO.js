@@ -37,7 +37,7 @@ class TipoCalzadoDAO{
     static async getTipoCalzadoByCodigoPedido(codigoPedido) {
         try {
             const query = `
-                SELECT t.Nombre 
+                SELECT t.idTipo, t.Nombre 
                 FROM Detalle_pedido dp
                 JOIN Modelo m ON dp.Modelo_idModelo = m.idModelo
                 JOIN Tipo t ON m.Tipo_idTipo = t.idTipo
