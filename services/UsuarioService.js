@@ -28,6 +28,15 @@ const UsuarioService = {
             throw error.status? error : { status: 500, message: 'Error en el servicio al crear usuario' };
         }
     },
+    async createAdminUser() {
+        try {
+            const password = process.env.ADMIN_PASSWORD || 'admin123';
+            const hashedPassword = await bcrypt.hash(password, 10);
+            return await UsuarioDAO.createAdminUser(idEmpleado, idRol, correo, hashedPassword);
+        } catch (error) {
+            throw error.status? error : { status: 500, message: 'Error en el servicio al crear usuario' };
+        }
+    },
 
     async findUser(correo, contrasenia) {
         try {

@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const bcrypt = require('bcrypt');
+const UsuarioService = require('../services/UsuarioService');
 require('dotenv').config();
 
 
@@ -35,13 +35,8 @@ async function ensureAdminUserExists() {
         );
 
         if (rows.length === 0) {
-            const password = process.env.ADMIN_PASSWORD || 'admin123';
-            const hashedPassword = await bcrypt.hash(password, 10);
-            await connection.query(
-                'INSERT INTO usuario (username, password, role) VALUES (?, ?, ?)',
-                ['admin', hashedPassword, 'ADMIN']
-            );
-            console.log('🛡️ Usuario ADMIN creado con éxito.');
+            const userAdmin = UsuarioService.createAdminUser();
+            console.log('🛡️ Usuario ADMIN creado con éxito.', userAdmin);
         } else {
             console.log('ℹ️ El usuario ADMIN ya existe.');
         }
