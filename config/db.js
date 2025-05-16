@@ -24,33 +24,8 @@ async function verifyConnection() {
         console.error('❌ Error al conectar a la base de datos:', error);
     }
 }
-// Crea el usuario ADMIN si no existe
-async function ensureAdminUserExists() {
-    try {
-        const connection = await db.promise().getConnection();
 
-        const [rows] = await connection.query(
-            'SELECT * FROM usuario WHERE Rol_idRol = ?',
-            ['1']
-        );
-
-        if (rows.length === 0) {
-            const userAdmin = UsuarioService.createAdminUser();
-            console.log('🛡️ Usuario ADMIN creado con éxito.', userAdmin);
-        } else {
-            console.log('ℹ️ El usuario ADMIN ya existe.');
-        }
-
-        connection.release();
-    } catch (error) {
-        console.error('❌ Error al verificar o crear el usuario ADMIN:', error);
-    }
-}
-
-// Ejecuta ambas funciones al iniciar
-(async () => {
-    await verifyConnection();
-    await ensureAdminUserExists();
-})();
+// Ejecuta  funciones al iniciar
+verifyConnection();
 
 module.exports = db.promise(); // Exportamos la versión con promesas

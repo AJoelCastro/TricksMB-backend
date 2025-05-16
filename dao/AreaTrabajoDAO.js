@@ -6,7 +6,7 @@ class AreaTrabajoDAO{
         try{
             const query = 'INSERT INTO Area_trabajo (Nombre) VALUES (?)';
             const [rows] = await db.execute(query, [Nombre]);
-            return rows;
+            return {id: rows.insertId, Nombre}
         }catch(error){
             console.error('Error al crear area de trabajo. ', error);
             throw error;
