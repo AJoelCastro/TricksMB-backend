@@ -11,6 +11,16 @@ class UsuarioDAO {
         }
     }
 
+    static async createAdminUser(idEmpleado, idRol, correo, contrasenia) {
+        try {
+            const query = 'INSERT INTO usuario (Empleado_idEmpleado, Rol_idRol, Correo, Contrasenia) VALUES (?,?,?,?)';
+            const [result] = await db.execute(query, [idEmpleado, idRol, correo, contrasenia]);
+            return { id: result.insertId, correo };
+        }catch (error) {
+            throw error.status? error : new Error('Error al crear el usuario ADMIN');
+        }
+    }
+
     static async encUser(correo) {
         try {
             const query = 'SELECT * FROM usuario WHERE Correo = ?';

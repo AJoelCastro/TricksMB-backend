@@ -3,7 +3,7 @@ const db = require('../config/db');
 class RolDAO {
     static async createRol(nombreRol) {
         try {
-            const query = 'INSERT INTO rol (NombreRol) VALUES (?)';
+            const query = 'INSERT INTO rol (Nombre) VALUES (?)';
             const [result] = await db.execute(query, [nombreRol]);
             return { id: result.insertId, nombreRol };
         } catch (error) {

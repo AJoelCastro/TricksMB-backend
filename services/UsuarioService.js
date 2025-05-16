@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const UsuarioDAO = require('../dao/UsuarioDAO');
 const RolDAO = require('../dao/RolDAO');
 const EmpleadoDAO = require('../dao/EmpleadoDAO');
+const AreaTrabajoDAO = require('../dao/AreaTrabajoDAO');
+require('dotenv').config();
 
 const UsuarioService = {
 
@@ -26,6 +28,22 @@ const UsuarioService = {
             return await UsuarioDAO.createUser(idEmpleado, idRol, correo, hashedContrasenia);
         } catch (error) {
             throw error.status? error : { status: 500, message: 'Error en el servicio al crear usuario' };
+        }
+    },
+    async createAdminUser() {
+        try {
+            const password = process.env.ADMIN_PASSWORD || 'admin123';
+            const correo = process.env.ADMIN_EMAIL || 'admin@gmail.com';
+            const nombre = process.env.ADMIN_USERNAME || 'admin';
+            const telefono = process.env.ADMIN_PHONE || '123456789';
+            const dni = process.env.ADMIN_DNI || '12345678';
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const dataRol = await RolDAO.createRol('ADMIN');
+            const areaTrabajo = await AreaTrabajoDAO.createAreaTrabajo('ADMINISTRACION');
+            const empleado = await EmpleadoDAO.createEmpleado(areaTrabajo.id, nombre, telefono, dni);
+            return await UsuarioDAO.createAdminUser(empleado.id, dataRol.id, correo, hashedPassword);
+        } catch (error) {
+            throw error.status? error : { status: 500, message: 'Error en el servicio al crear usuario Admin' };
         }
     },
 

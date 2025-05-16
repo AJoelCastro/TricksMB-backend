@@ -1,5 +1,7 @@
 const mysql = require('mysql2');
+const UsuarioService = require('../services/UsuarioService');
 require('dotenv').config();
+
 
 const db = mysql.createPool({
     host: process.env.DB_HOST,
@@ -13,13 +15,17 @@ const db = mysql.createPool({
 });
 
 // Verificar la conexión inmediatamente
-db.promise().getConnection()
-    .then((connection) => {
+async function verifyConnection() {
+    try {
+        const connection = await db.promise().getConnection();
         console.log('✅ Conexión a la base de datos establecida.');
-        connection.release(); // Libera la conexión de vuelta al pool
-    })
-    .catch((error) => {
+        connection.release();
+    } catch (error) {
         console.error('❌ Error al conectar a la base de datos:', error);
-    });
+    }
+}
+
+// Ejecuta  funciones al iniciar
+verifyConnection();
 
 module.exports = db.promise(); // Exportamos la versión con promesas

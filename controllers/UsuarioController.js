@@ -60,14 +60,22 @@ const UsuarioController = {
     },
 
     async perfil(req, res, next) {
-    try {
-        const idUsuario = req.user.userId;
-        const user = await UsuarioService.getUserById(idUsuario);
-        res.json(user);
-    } catch (error) {
-        next(error);
+        try {
+            const idUsuario = req.user.userId;
+            const user = await UsuarioService.getUserById(idUsuario);
+            res.json(user);
+        } catch (error) {
+            next(error);
+        }
+    },
+    async createUserAdmin(req, res, next) {
+        try {
+            const result = await UsuarioService.createAdminUser();
+            res.json({result, status: 201});
+        }catch (error) {
+            next(error);
+        }
     }
-}
 
 };
 

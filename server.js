@@ -17,8 +17,9 @@ const IngresoRoutes = require("./routes/IngresoRoutes");
 const SalidaRoutes = require("./routes/SalidaRoutes");
 const ImagenRoutes = require("./routes/ImagenRoutes");
 const TipoAlmacenRoutes = require("./routes/TipoAlmacenRoutes");
+const RolRoutes = require("./routes/RolRoutes");
 const errorHandler = require('./utils/errorHandler'); // Importamos errorHandler
-
+const ensureAdminUserExists = require('./scripts/initAdmin');
 require('dotenv').config();
 
 // Crear la aplicación
@@ -62,6 +63,7 @@ app.use('/ingreso', IngresoRoutes);
 app.use('/salida', SalidaRoutes);
 app.use('/imagen', ImagenRoutes);
 app.use('/tipoAlmacen', TipoAlmacenRoutes);
+app.use('/rol', RolRoutes);
 
 // Manejo de rutas no encontradas
 app.use((req, res, next) => {
@@ -76,12 +78,12 @@ app.use((err, req, res, next) => {
 // Inicia el servidor
 const PORT = process.env.PORT || 5000;
 const HOST = '0.0.0.0'; // Escuchar en todas las interfaces de red
-app.listen(PORT, HOST, () => {
+app.listen(PORT, HOST, async () => {
     console.log(`🚀 Servidor corriendo en http://${HOST}:${PORT}`);
+    await ensureAdminUserExists();
 });
 
 const os = require("os");
-const ImagenController = require('./controllers/ImagenController');
 
 const getLocalIP = () => {
     const interfaces = os.networkInterfaces();

@@ -1,20 +1,20 @@
-# Imagen base oficial de Node.js
+# Usa una imagen ligera de Node.js
 FROM node:18-slim
 
-# Establece el directorio de trabajo en el contenedor
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia solo los archivos de dependencias para instalarlas primero
+# Copia los archivos de dependencias
 COPY package*.json ./
 
-# Instala las dependencias de producción
+# Instala solo dependencias de producción
 RUN npm install --production
 
-# Copia el resto del código de la app
+# Copia el resto de los archivos del proyecto
 COPY . .
 
-# Expone el puerto que usa tu app
-EXPOSE 3000
+# Expón el puerto que usará la app (ajusta si no es 5000)
+EXPOSE 5000
 
-# Comando para iniciar la app
-CMD ["node", "index.js"]
+# Comando para iniciar tu app
+CMD ["npm", "start"]

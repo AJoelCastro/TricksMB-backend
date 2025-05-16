@@ -1,8 +1,9 @@
 name: Continue Integration to Docker
 
 on:
-  workflow_dispatch:
-
+  push:
+    branches:
+      - main
 jobs:
   docker:
     runs-on: ubuntu-latest
