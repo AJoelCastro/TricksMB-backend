@@ -81,7 +81,6 @@ app.listen(PORT, HOST, () => {
 });
 
 const os = require("os");
-const ImagenController = require('./controllers/ImagenController');
 
 const getLocalIP = () => {
     const interfaces = os.networkInterfaces();
