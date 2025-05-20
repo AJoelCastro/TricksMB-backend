@@ -39,7 +39,11 @@ const UsuarioService = {
             const dni = process.env.ADMIN_DNI || '12345678';
             const hashedPassword = await bcrypt.hash(password, 10);
             const dataRol = await RolDAO.createRol('ADMIN');
-            const areaTrabajo = await AreaTrabajoDAO.createAreaTrabajo('ADMINISTRACION');
+            await AreaTrabajoDAO.createAreaTrabajo('Corte');
+            await AreaTrabajoDAO.createAreaTrabajo('Perfilado');
+            await AreaTrabajoDAO.createAreaTrabajo('Armado');
+            await AreaTrabajoDAO.createAreaTrabajo('Alistado');
+            const areaTrabajo = await AreaTrabajoDAO.createAreaTrabajo('Administracion');
             const empleado = await EmpleadoDAO.createEmpleado(areaTrabajo.id, nombre, telefono, dni);
             return await UsuarioDAO.createAdminUser(empleado.id, dataRol.id, correo, hashedPassword);
         } catch (error) {
