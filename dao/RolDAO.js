@@ -40,7 +40,7 @@ class RolDAO {
             if (result.affectedRows === 0) {
                 const errorData = new Error("Rol no encontrado");
                 errorData.status = 404;
-                throw errorData; // Lanza la excepción
+                throw errorData;
             }
             return { id: idRol, nombreRol };
         } catch (error) {
