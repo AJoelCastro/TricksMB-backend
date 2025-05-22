@@ -24,5 +24,13 @@ class RolDAO {
             throw error.status ? error : new Error('Error al obtener el rol');
         }
     }
+    static async getAllRols() {
+        try {
+            const rows = await db.execute('SELECT * FROM rol');
+            return rows;
+        } catch (error) {
+            throw error.status ? error : new Error('Error al obtener los roles');
+        }
+    }
 }
 module.exports = RolDAO;
